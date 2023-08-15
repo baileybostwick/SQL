@@ -1,0 +1,42 @@
+--Created a basketball store database
+
+CREATE TABLE basketballstore (
+    item_id INTEGER PRIMARY KEY,
+    item TEXT,
+    quantity INTEGER,
+    aisle INTEGER,
+    price INTEGER
+);
+
+INSERT INTO basketballstore VALUES
+    (1, 'mens basketball', 45, 4, 20),
+    (2, 'womens basketball', 25, 2, 20),
+    (3, 'youth basketball', 23, 10, 20),
+    (4, 'air pump', 15, 2, 15),
+    (5, 'basketball hoop', 5, 10, 15),
+    (6, 'small socks', 10, 3, 20),
+    (7, 'medium socks', 10, 3, 20),
+    (8, 'large socks', 6, 3, 20),
+    (9, 'small shirts', 20, 4, 15),
+    (10, 'medium shirts', 15, 4, 15),
+    (11, 'large shirts', 10, 4, 15),
+    (12, 'youth jersey small', 4, 7, 20),
+    (13, 'youth jersey medium', 8, 7, 20),
+    (14, 'youth jersey large', 12, 7, 20),
+    (15, 'basketball bag', 30, 9, 50);
+
+--Displayed items by price (highest-lowest)
+
+SELECT * FROM basketballstore;
+SELECT item, price FROM basketballstore
+order by price desc;
+
+--what is the avg price of items in aisle 3?
+
+SELECT AVG(price) "avg aisle 3 price" FROM basketballstore where aisle = 3
+
+--what are the top 3 items with the most quantity?
+
+SELECT item, quantity from basketballstore ORDER BY quantity desc LIMIT 3; 
+
+
