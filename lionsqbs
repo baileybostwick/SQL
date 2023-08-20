@@ -1,0 +1,59 @@
+
+ CREATE TABLE lionsqbs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    age INTEGER, 
+    pos TEXT, 
+    college TEXT, 
+    exp INTEGER);
+    
+INSERT INTO lionsqbs (name, age, pos, college, exp) VALUES ('teddy bridgewater', 30, 'qb', 'louisville', 10),
+
+('jared goff', 28, 'qb', 'california', 8), 
+
+('hendon hooker', 25,'qb','tennessee', 0),
+
+('adrian martinez', 23, 'qb', 'kansas state', 0),
+
+('nate sudfeld', 29, 'qb', 'indiana', 7);
+
+CREATE TABLE qbstats (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, player_id INTEGER,
+    gp INTEGER,
+    comp INTEGER, 
+    att INTEGER, 
+    yds INTEGER, 
+    tds INTEGER);
+
+INSERT INTO qbstats (player_id, gp, comp, att, yds, tds) VALUES (1, 78, 1372, 2067, 15120, 75), 
+(2, 100, 2250, 3502, 25854, 155), 
+(3, 0, 0, 0, 0, 0), 
+(4, 0, 0, 0 , 0, 0), 
+(5, 6, 25, 37, 188, 1);
+
+/*What is the completion percentage for each quarterback? */
+
+SELECT
+    lionsqbs.name AS quarterback_name,
+    qbstats.comp AS completions,
+    qbstats.att AS attempts,
+    CASE
+        WHEN qbstats.att > 0 THEN (CAST(qbstats.comp AS FLOAT) / qbstats.att) * 100
+        ELSE 0
+    END AS completion_percentage
+FROM
+    lionsqbs
+JOIN
+    qbstats ON lionsqbs.id = qbstats.player_id
+    ORDER BY completion_percentage DESC;
+    
+    /* Which quarterbacks have played more than 5 games and have an average of at least 200 passing yards per game? */
+    
+ SELECT lq.name AS quarterback_name,
+    qs.gp AS games_played,
+    qs.yds AS total_passing_yards,
+    qs.yds / qs.gp AS average_passing_yards_per_game
+    FROM lionsqbs lq 
+    JOIN qbstats qs ON lq.id = qs.player_id
+    WHERE qs.gp > 5 AND (qs.yds / qs.gp) >= 200
+    ORDER BY average_passing_yards_per_game DESC; 
